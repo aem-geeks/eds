@@ -35,7 +35,9 @@ function constructPayload(form) {
 }
 
 async function submitForm(form) {
+  console.log("========FORM======>",form);
   const payload = constructPayload(form);
+  console.log("========Payload======>",payload);
   payload.timestamp = new Date().toJSON();
   const resp = await fetch(form.dataset.action, {
     method: 'POST',
@@ -49,7 +51,94 @@ async function submitForm(form) {
   return payload;
 }
 
-function createButton(fd) {
+
+async function submitService(fd,formURL,form) {
+  console.log("========FORM======>",form);
+  const payload = constructPayload(form);
+  console.log("========Payload======>",payload);
+  payload.timestamp = new Date().toJSON();
+  const resp = await fetch(form.dataset.action, {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data: payload }),
+  });
+  await resp.text();
+  return payload;
+}
+
+async function createQP(qp){
+  qp.split(',').forEach((i,q)=>{
+     console.log(" QP => ",i,q);
+  })
+}
+
+async function createPL(pl){
+  pl.split(',').forEach((i,p)=>{
+     console.log(" PL => ",i,p);
+  })
+}
+
+async function createParam(pp){
+  pp.split(',').forEach((i,pp)=>{
+     console.log(" PP => ",i,pp);
+  })
+}
+
+async function getServices(fd,formURL,form){
+  console.log("=====Sheet NAME=====> {} ",fd.ServiceSheet);
+  const serviceURL=await formURL+fd.ServiceSheet;
+  console.log("=====Sheet=====> {} ",serviceURL);
+  //const { serviceData } = new URL(serviceURL);
+  //console.log("=====SheetURL=====> {} ",serviceData);
+  const resp = await fetch(serviceURL);
+  console.log("=====RESP=====> {} ",resp);
+  const json = await resp.json();
+  console.log("=====SheetJSON=====> {} ",json);
+  json.data.forEach((fd) => {
+    console.log("===Service data ===> {} ",fd.ServiceId,fd.Url,fd.Params,fd.Payload,fd.History,fd.Cookies);
+    const qp="?";
+    for (let fp in fd) {
+      switch (fp) {
+        case 'ServiceId':
+          console.log(" SERVICE ID=> ",fp,fd[fp]);
+          break;
+        case 'Url':
+          console.log(" URL=> ",fp,fd[fp]);
+          break;
+        case 'Params':
+          console.log(" PARAMS=> ",fp,fd[fp]);
+          createQP(fd[fp]);
+          break;
+        case 'Payload':
+          console.log(" PAYLOAD=> ",fp,fd[fp]);
+          createPL(fd[fp]);
+          break;
+        case 'History':
+          console.log(" HISTORY=> ",fp,fd[fp]);
+          createParam(fd[fp]);
+          break;
+        case 'Cookies':
+          console.log(" COOKIES=> ",fp,fd[fp]);
+          createParam(fd[fp]);
+          break;
+        default:
+          console.log("=This is default case=");
+      }
+   }
+
+  /* */
+
+   submitService(fd,formURL,form);
+
+  /* */
+  })
+
+}
+
+function createButton(fd,formURL) {
   const button = document.createElement('button');
   button.textContent = fd.Label;
   button.classList.add('button');
@@ -60,9 +149,11 @@ function createButton(fd) {
       if (form.checkValidity()) {
         event.preventDefault();
         button.setAttribute('disabled', '');
-        await submitForm(form);
-        const redirectTo = fd.Extra;
-        window.location.href = redirectTo;
+        await getServices(fd,formURL,form);
+        //await submitForm(form);
+
+        //const redirectTo = fd.Extra;
+        //window.location.href = redirectTo;
       }
     });
   }
@@ -131,19 +222,26 @@ function fill(form) {
   }
 }
 
+
 async function createForm(formURL) {
+  //console.log("=====formURL=====> {} ",formURL);
   const { pathname } = new URL(formURL);
+  //console.log("=====pathname=====> {} ",pathname);
   const resp = await fetch(pathname);
   const json = await resp.json();
+  //console.log("=====JSON=====> {} ",json);
   const form = document.createElement('form');
   const rules = [];
   // eslint-disable-next-line prefer-destructuring
   form.dataset.action = pathname.split('.json')[0];
+  //console.log("=====ACTION=====> {} ",form.dataset.action);
   json.data.forEach((fd) => {
+    //console.log("=====TYPE=====> {} ",fd.Field);
     fd.Type = fd.Type || 'text';
     const fieldWrapper = document.createElement('div');
     const style = fd.Style ? ` form-${fd.Style}` : '';
     const fieldId = `form-${fd.Type}-wrapper${style}`;
+    //console.log("=====Field ID=====> {} ",fieldId);
     fieldWrapper.className = fieldId;
     fieldWrapper.classList.add('field-wrapper');
     switch (fd.Type) {
@@ -166,7 +264,7 @@ async function createForm(formURL) {
         fieldWrapper.append(createTextArea(fd));
         break;
       case 'submit':
-        fieldWrapper.append(createButton(fd));
+        fieldWrapper.append(createButton(fd,formURL));
         break;
       default:
         fieldWrapper.append(createLabel(fd));
@@ -191,7 +289,9 @@ async function createForm(formURL) {
 }
 
 export default async function decorate(block) {
+  //console.log("====BLOCK=====> {} ",block);
   const form = block.querySelector('a[href$=".json"]');
+  console.log("====JSON URL=====> {} ",form);
   addInViewAnimationToSingleElement(block, 'fade-up');
   if (form) {
     form.replaceWith(await createForm(form.href));
