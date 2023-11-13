@@ -3,6 +3,7 @@ import { addInViewAnimationToSingleElement } from '../../utils/helpers.js';
 function createSelect(fd) {
   const select = document.createElement('select');
   select.id = fd.Field;
+  select.name=fd.Field;
   if (fd.Placeholder) {
     const ph = document.createElement('option');
     ph.textContent = fd.Placeholder;
@@ -30,6 +31,7 @@ function constructPayload(form) {
     } else if (fe.id) {
       payload[fe.id] = fe.value;
     }
+    //console.log(" FD====> ",fe.name,fe.value);
   });
   return payload;
 }
@@ -69,10 +71,25 @@ async function submitService(fd,formURL,form) {
   return payload;
 }
 
-async function createQP(qp){
-  qp.split(',').forEach((i,q)=>{
-     console.log(" QP => ",i,q);
+async function createQP(qp,form){
+  let qps="";
+  qp.split(',').forEach((q,i)=>{
+    [...form.elements].forEach((fe)=>{
+      console.log(" FE NAME => ",q,fe.name,fe.value);
+     if(fe.name==q){
+      console.log("qps",qps);
+      if(qps==""){
+         qps=qps+"?"+fe.name+"="+fe.value;
+        //qps.concat("?"+fe.name+"="+fe.value);
+      }else{
+         qps=qps+"&"+fe.name+"="+fe.value;
+        //qps.concat("&"+fe.name+"="+fe.value);
+      }
+    }
+     }); 
   })
+  console.log(" QPS => ",qps);
+  return qps;
 }
 
 async function createPL(pl){
@@ -110,19 +127,19 @@ async function getServices(fd,formURL,form){
           break;
         case 'Params':
           console.log(" PARAMS=> ",fp,fd[fp]);
-          createQP(fd[fp]);
+          createQP(fd[fp],form);
           break;
         case 'Payload':
-          console.log(" PAYLOAD=> ",fp,fd[fp]);
-          createPL(fd[fp]);
+          //console.log(" PAYLOAD=> ",fp,fd[fp]);
+          //createPL(fd[fp]);
           break;
         case 'History':
-          console.log(" HISTORY=> ",fp,fd[fp]);
-          createParam(fd[fp]);
+          //console.log(" HISTORY=> ",fp,fd[fp]);
+          //createParam(fd[fp]);
           break;
         case 'Cookies':
-          console.log(" COOKIES=> ",fp,fd[fp]);
-          createParam(fd[fp]);
+          //console.log(" COOKIES=> ",fp,fd[fp]);
+          //createParam(fd[fp]);
           break;
         default:
           console.log("=This is default case=");
@@ -170,6 +187,7 @@ function createInput(fd) {
   const input = document.createElement('input');
   input.type = fd.Type;
   input.id = fd.Field;
+  input.name=fd.Field;
   input.setAttribute('placeholder', fd.Placeholder);
   if (fd.Mandatory === 'x') {
     input.setAttribute('required', 'required');
@@ -177,9 +195,19 @@ function createInput(fd) {
   return input;
 }
 
+function createHidden(fd) {
+  const input = document.createElement('input');
+  input.type = fd.Type;
+  input.id = fd.Field;
+  input.name=fd.Field;
+  input.value=fd.Value;
+  return input;
+}
+
 function createTextArea(fd) {
   const input = document.createElement('textarea');
   input.id = fd.Field;
+  input.name=fd.Field;
   input.setAttribute('placeholder', fd.Placeholder);
   if (fd.Mandatory === 'x') {
     input.setAttribute('required', 'required');
@@ -263,6 +291,9 @@ async function createForm(formURL) {
         fieldWrapper.append(createLabel(fd));
         fieldWrapper.append(createTextArea(fd));
         break;
+      case 'hidden':
+        fieldWrapper.append(createHidden(fd));
+        break;        
       case 'submit':
         fieldWrapper.append(createButton(fd,formURL));
         break;
