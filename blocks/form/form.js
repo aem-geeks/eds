@@ -1,4 +1,5 @@
 import { addInViewAnimationToSingleElement } from '../../utils/helpers.js';
+import { browserId } from '../../services/services.js';
 
 function createSelect(fd) {
   const select = document.createElement('select');
@@ -36,6 +37,19 @@ function constructPayload(form) {
   return payload;
 }
 
+function servicePayload(form) {
+  var formData = new FormData();
+  [...form.elements].forEach((fe) => {
+    if (fe.type === 'checkbox') {
+      if (fe.checked) formData.append(fe.id,fe.value);
+    } else if (fe.id) {
+      formData.append(fe.id,fe.value)
+    }
+    //console.log(" FD====> ",fe.name,fe.value);
+  });
+  return formData;
+}
+
 async function submitForm(form) {
   console.log("========FORM======>",form);
   const payload = constructPayload(form);
@@ -46,6 +60,7 @@ async function submitForm(form) {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
     },
     body: JSON.stringify({ data: payload }),
   });
@@ -54,32 +69,40 @@ async function submitForm(form) {
 }
 
 
-async function submitService(fd,formURL,form) {
-  console.log("========FORM======>",form);
-  const payload = constructPayload(form);
-  console.log("========Payload======>",payload);
-  payload.timestamp = new Date().toJSON();
-  const resp = await fetch(form.dataset.action, {
+async function submitService(serviceId,apiUrl,qpString,payloadString) {
+  //console.log("========FORM======>",form);
+  //const payload = servicePayload(form);
+  let url=apiUrl+qpString;
+  console.log("========URL======>",url);
+  //payload.timestamp = new Date().toJSON();
+  console.log("-------------Starting Rest Call--------------",new Date().toJSON())
+  const resp = await fetch(url, {
     method: 'POST',
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Host':'web-takeda-uat.epsilon.com',
+      'Postman-Token': '9ff00735-4a05-458b-bbe0-526ced82cc39',
+      'User-Agent': 'PostmanRuntime/7.34.0',
     },
-    body: JSON.stringify({ data: payload }),
+    body: JSON.stringify({ data: payloadString }),
   });
   await resp.text();
-  return payload;
+  console.log("-------------End Rest Call--------------",new Date().toJSON())
+  console("---------Response------>",resp.text());
+  return resp.text();
 }
 
-async function createQP(qp,form){
+function createQP(qp,form){
   let qps="";
   qp.split(',').forEach((q,i)=>{
     [...form.elements].forEach((fe)=>{
-      console.log(" FE NAME => ",q,fe.name,fe.value);
+      //console.log(" FE NAME => ",q,fe.name,fe.value);
      if(fe.name==q){
-      console.log("qps",qps);
+      //console.log("qps",qps);
       if(qps==""){
-         qps=qps+"?"+fe.name+"="+fe.value;
+         qps=qps+fe.name+"="+fe.value;
         //qps.concat("?"+fe.name+"="+fe.value);
       }else{
          qps=qps+"&"+fe.name+"="+fe.value;
@@ -90,12 +113,17 @@ async function createQP(qp,form){
   })
   console.log(" QPS => ",qps);
   return qps;
+  //return JSON.stringify(qps);
 }
 
-async function createPL(pl){
+function createPL(fd,pl){
   pl.split(',').forEach((i,p)=>{
      console.log(" PL => ",i,p);
-  })
+  });
+  if(fd.ServiceId=='browserId'){
+     console.log("====Browser Payload ====> ",browserId());
+     return browserId();
+  }
 }
 
 async function createParam(pp){
@@ -105,33 +133,39 @@ async function createParam(pp){
 }
 
 async function getServices(fd,formURL,form){
-  console.log("=====Sheet NAME=====> {} ",fd.ServiceSheet);
+  
+  //console.log("=====Sheet NAME=====> {} ",fd.ServiceSheet,browserId());
   const serviceURL=await formURL+fd.ServiceSheet;
-  console.log("=====Sheet=====> {} ",serviceURL);
+  //console.log("=====Sheet=====> {} ",serviceURL);
   //const { serviceData } = new URL(serviceURL);
   //console.log("=====SheetURL=====> {} ",serviceData);
   const resp = await fetch(serviceURL);
-  console.log("=====RESP=====> {} ",resp);
+  //console.log("=====RESP=====> {} ",resp);
   const json = await resp.json();
-  console.log("=====SheetJSON=====> {} ",json);
+  //console.log("=====SheetJSON=====> {} ",json);
   json.data.forEach((fd) => {
-    console.log("===Service data ===> {} ",fd.ServiceId,fd.Url,fd.Params,fd.Payload,fd.History,fd.Cookies);
-    const qp="?";
+    console.log("===Service Information ===> {} ",fd.ServiceId,fd.Url,fd.Params,fd.Payload,fd.History,fd.Cookies);
+    let qpString=null;
+    let serviceId=null;
+    let apiUrl=null;
+    let payloadString=null;
     for (let fp in fd) {
       switch (fp) {
         case 'ServiceId':
-          console.log(" SERVICE ID=> ",fp,fd[fp]);
+          console.log(" SERVICE ID=> ",fd.ServiceId);
+          serviceId=fd.ServiceId;
           break;
         case 'Url':
-          console.log(" URL=> ",fp,fd[fp]);
+          console.log(" URL=> ",fd.Url);
+          apiUrl=fd.Url;
           break;
         case 'Params':
-          console.log(" PARAMS=> ",fp,fd[fp]);
-          createQP(fd[fp],form);
+          console.log("Q PARAMS=> ",fd.Params);
+          qpString=createQP(fd[fp],form);
           break;
         case 'Payload':
-          //console.log(" PAYLOAD=> ",fp,fd[fp]);
-          //createPL(fd[fp]);
+          console.log(" PAYLOAD=> ",fd.Payload);
+          payloadString=createPL(fd,fd[fp]);
           break;
         case 'History':
           //console.log(" HISTORY=> ",fp,fd[fp]);
@@ -146,9 +180,10 @@ async function getServices(fd,formURL,form){
       }
    }
 
+   console.log("----Final Data---> ",serviceId,apiUrl,qpString,payloadString);
   /* */
 
-   submitService(fd,formURL,form);
+  submitService(serviceId,apiUrl,qpString,payloadString);
 
   /* */
   })
@@ -322,7 +357,7 @@ async function createForm(formURL) {
 export default async function decorate(block) {
   //console.log("====BLOCK=====> {} ",block);
   const form = block.querySelector('a[href$=".json"]');
-  console.log("====JSON URL=====> {} ",form);
+  //console.log("====JSON URL=====> {} ",form);
   addInViewAnimationToSingleElement(block, 'fade-up');
   if (form) {
     form.replaceWith(await createForm(form.href));
