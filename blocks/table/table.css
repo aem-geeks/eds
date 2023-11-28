@@ -1,0 +1,14 @@
+.countries table, th {
+    border: 1px solid black;
+    background-color:cornflowerblue;
+}
+.countries table, td {
+    border: 1px solid black;
+    background-color:aliceblue;
+}
+
+.countries .region-select>select{
+    width: 40%;
+    font-size: large;
+}
+
