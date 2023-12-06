@@ -3,11 +3,11 @@
   "plugins": [
     {
       "id": "asset-library",
-      "title": "My Assets",
+      "title": "AEM Assets",
       "environments": [
         "edit"
       ],
-      "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html",
+      "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?rail=false",
       "isPalette": true,
       "includePaths": [
         "**.docx**"
