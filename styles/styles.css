@@ -177,7 +177,7 @@ a.button.secondary, button.secondary {
 }
 
 main input {
-  font-size: 1.25rem;
+  /*font-size: 1.25rem;*/
   width: 100%;
   max-width: 50rem;
   display: block;
