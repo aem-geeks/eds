@@ -1,5 +1,11 @@
 {
   "project": "Geeks franklin",
+  "libraries": [
+    {
+      "text": "Blocks",
+      "paths": ["https://main--eds--aem-geeks.hlx.page/tools/sidekick/library.json"]
+    }
+  ],
   "plugins": [
     {
       "id": "asset-library",
