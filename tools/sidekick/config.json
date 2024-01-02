@@ -13,8 +13,8 @@
       "environments": [ "edit" ],
       "isPalette": true,
       "paletteRect": "top: auto; bottom: 25px; left: 25px; height: 388px; width: 360px;",
-      "url": "/tools/library",
-      "includePaths": [ "**.docx**" ]
+      "url": "/tools/sidekick/library.html",
+      "includePaths": [ "**.docx**"]
     },
     {
       "id": "asset-library",
