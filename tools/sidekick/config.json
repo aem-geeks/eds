@@ -12,8 +12,8 @@
       "title": "Library",
       "environments": [ "edit" ],
       "isPalette": true,
-      "paletteRect": "top: auto; bottom: 25px; left: 25px; height: 388px; width: 360px;",
-      "url": "/tools/sidekick/library",
+      "paletteRect": "top: auto; bottom: 25px; left: 25px; height: 50%; width: 100%;",
+      "url": "/tools/sidekick/library.html",
       "includePaths": [ "**.docx**"]
     },
     {
