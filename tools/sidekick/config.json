@@ -1,21 +1,6 @@
 {
   "project": "Geeks franklin",
-  "libraries": [
-    {
-      "text": "Blocks",
-      "paths": ["https://main--eds--aem-geeks.hlx.page/tools/sidekick/library.json"]
-    }
-  ],
   "plugins": [
-    {
-      "id": "library",
-      "title": "Library",
-      "environments": [ "edit" ],
-      "isPalette": true,
-      "paletteRect": "top: auto;left: 0px; height: 90%; width: 100%;",
-      "url": "/tools/sidekick/library.html",
-      "includePaths": [ "**.docx**"]
-    },
     {
       "id": "asset-library",
       "title": "AEM Assets",
