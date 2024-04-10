@@ -1,0 +1,11 @@
+table th {
+    border: 1px solid black;
+    background-color:cornflowerblue;
+}
+table td {
+    border: 1px solid black;
+    background-color:aliceblue;
+}
+.table-heading{
+    text-align: center;
+}

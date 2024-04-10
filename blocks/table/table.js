@@ -1,12 +1,17 @@
+import { fetchPlaceholders,getMetadata } from '../../scripts/aem.js';
+const placeholders = await fetchPlaceholders(getMetadata("locale"));
+
+const { allCountries,abbreviation,africa,america,asia,australia,capital,continent,countries,europe,sNo} = placeholders;
+
 
 async function createTableHeader(table){
     let tr=document.createElement("tr");
-    let sno=document.createElement("th");sno.appendChild(document.createTextNode("S.No"));
-    let conuntry=document.createElement("th");conuntry.appendChild(document.createTextNode("Countries"));
-    let continent=document.createElement("th");continent.appendChild(document.createTextNode("Continent"));
-    let capital=document.createElement("th");capital.appendChild(document.createTextNode("Capital"));
-    let abbr=document.createElement("th");abbr.appendChild(document.createTextNode("Abbreviation"));
-    tr.append(sno);tr.append(conuntry);tr.append(capital);tr.append(continent);tr.append(abbr);
+    let sno=document.createElement("th");sno.appendChild(document.createTextNode(sNo));
+    let conuntry=document.createElement("th");conuntry.appendChild(document.createTextNode(countries));
+    let continenth=document.createElement("th");continenth.appendChild(document.createTextNode(continent));
+    let capitalh=document.createElement("th");capitalh.appendChild(document.createTextNode(capital));
+    let abbr=document.createElement("th");abbr.appendChild(document.createTextNode(abbreviation));
+    tr.append(sno);tr.append(conuntry);tr.append(capitalh);tr.append(continenth);tr.append(abbr);
     table.append(tr);
 }
 async function createTableRow(table,row,i){
@@ -25,7 +30,7 @@ async function createSelectMap(jsonURL){
     const { pathname } = new URL(jsonURL);
 
     const resp = await fetch(pathname);
-    optionsMap.set("all","All Countries");optionsMap.set("asia","Asia");optionsMap.set("europe","Europe");optionsMap.set("africa","Africa");optionsMap.set("america","America");optionsMap.set("australia","Australia");
+    optionsMap.set("all",allCountries);optionsMap.set("asia",asia);optionsMap.set("europe",europe);optionsMap.set("africa",africa);optionsMap.set("america",america);optionsMap.set("australia",australia);
     const select=document.createElement('select');
     select.id = "region";
     select.name="region";
