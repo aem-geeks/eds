@@ -3,16 +3,60 @@
   "plugins": [
     {
       "id": "asset-library",
-      "title": "AEM Assets",
+      "title": "My Assets1",
       "environments": [
         "edit"
       ],
-      "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?rail=false",
+      "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html",
       "isPalette": true,
       "includePaths": [
         "**.docx**"
       ],
       "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:400px; height: calc(100vh - 60px)"
+    },
+    {
+      "id": "google-assist",
+      "title": "Google Assist",
+      "environments": [
+        "edit"
+      ],
+      "url": "http://www.google.com",
+      "isPalette": true,
+      "includePaths": [
+        "**.docx**"
+      ],
+      "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:400px; height: calc(100vh - 60px)"
+    },
+    {
+      "id": "tools",
+      "title": "Tools",
+      "isContainer": true
+    },
+    {
+      "containerId": "tools",
+      "id": "localize",
+      "title": "Localize",
+      "environments": [ "edit" ],
+      "url": "/tools/loc/index.html",
+      "passReferrer": true,
+      "includePaths": [ "**/:x**" ]
+    },
+    {
+      "containerId": "tools",
+      "id": "floodgate",
+      "title": "YouTube",
+      "environments": [ "edit" ],
+      "url": "https://www.youtube.com/@AEMGeeks",
+      "passReferrer": true,
+      "includePaths": [ "**/:x**" ]
+    },
+    {
+      "containerId": "tools",
+      "title": "Send to CaaS",
+      "id": "sendtocaas",
+      "environments": ["dev", "preview", "live", "prod"],
+      "event": "send-to-caas",
+      "excludePaths": ["/tools/caas**", "/tools/ost**", "*.json"]
     }
   ]
 }
