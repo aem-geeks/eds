@@ -18,7 +18,7 @@
       "id": "google-assist",
       "title": "Google Assist",
       "environments": [ "edit","dev", "preview", "live", "prod"],
-      "url": "http://www.google.com",
+      "url": "http://www.google.com?output=embed",
       "isPalette": true,
       "includePaths": [
         "**.docx**"
