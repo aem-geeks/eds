@@ -34,7 +34,8 @@
       "url": "/tools/contactus/contactus.html?user=aem-geeks",
       "isPalette": true,
       "passReferrer": false,
-      "includePaths": [ "**/:x**" ]
+      "includePaths": [ "**/:x**" ],
+      "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:500px; height: calc(100vh - 60px)"
     },
     {
       "containerId": "tools",
