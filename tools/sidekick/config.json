@@ -31,8 +31,9 @@
       "id": "contactus",
       "title": "Contact US",
       "environments": [ "edit","dev", "preview", "live", "prod" ],
-      "url": "/tools/contactus/contactus.html",
-      "passReferrer": true,
+      "url": "/tools/contactus/contactus.html?user=aem-geeks",
+      "isPalette": true,
+      "passReferrer": false,
       "includePaths": [ "**/:x**" ]
     },
     {
