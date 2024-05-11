@@ -40,7 +40,6 @@
       "title": "Contact Us",
       "id": "contacttous",
       "environments": ["dev", "preview", "live", "prod"],
-      "event": "contact-to-us",
       "url": "/tools/contactus/contactus.html",
       "excludePaths": ["/tools/caas**", "/tools/ost**", "*.json"]
     }
