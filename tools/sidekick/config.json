@@ -28,8 +28,8 @@
     },
     {
       "containerId": "tools",
-      "id": "localize",
-      "title": "Localize",
+      "id": "contactus",
+      "title": "Contact US",
       "environments": [ "edit","dev", "preview", "live", "prod" ],
       "url": "/tools/contactus/contactus.html",
       "passReferrer": true,
