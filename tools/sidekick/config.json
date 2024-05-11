@@ -28,20 +28,21 @@
     },
     {
       "containerId": "tools",
+      "id": "localize",
+      "title": "Localize",
+      "environments": [ "edit","dev", "preview", "live", "prod" ],
+      "url": "/tools/contactus/contactus.html",
+      "passReferrer": true,
+      "includePaths": [ "**/:x**" ]
+    },
+    {
+      "containerId": "tools",
       "id": "youtube",
       "title": "YouTube",
       "environments": [ "edit","dev", "preview", "live", "prod" ],
       "url": "https://www.youtube.com/@AEMGeeks",
       "passReferrer": true,
       "includePaths": [ "**/:x**" ]
-    },
-    {
-      "containerId": "tools",
-      "title": "Contact Us",
-      "id": "contacttous",
-      "environments": ["dev", "preview", "live", "prod"],
-      "url": "/tools/contactus/contactus.html",
-      "excludePaths": ["/tools/caas**", "/tools/ost**", "*.json"]
     }
   ]
 }
