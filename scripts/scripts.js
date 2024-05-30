@@ -13,6 +13,8 @@ import {
   loadCSS,
 } from './aem.js';
 
+import { loadTheme } from './themeloader.js';
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
@@ -127,6 +129,7 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  loadTheme();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
