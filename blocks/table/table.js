@@ -62,9 +62,7 @@ async function createTable(jsonURL,val) {
     const table = document.createElement('table');
     createTableHeader(table);
     json.data.forEach((row,i) => {
-
         createTableRow(table,row,(i+1));
-
       
     });
     
