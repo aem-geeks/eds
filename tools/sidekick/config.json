@@ -1,12 +1,11 @@
 {
-  "project": "Geeks franklin",
+  "project": "Geeks Edge Deliver Services",
   "plugins": [
     {
       "id": "google-assist",
       "title": "Google Assist",
       "environments": [ "edit","dev", "preview", "live", "prod"],
       "url": "https://www.google.com/search?q=edge+delivery+services",
-      "isPalette": false,
       "passConfig":true,
       "passReferrer": true,
       "includePaths": [
@@ -22,7 +21,7 @@
     {
       "containerId": "tools",
       "id": "localize",
-      "title": "Localize 1",
+      "title": "Localize 2",
       "environments": [ "edit","dev", "preview", "live", "prod" ],
       "url": "/tools/loc/index.html",
       "passReferrer": true,
