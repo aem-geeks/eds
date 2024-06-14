@@ -5,8 +5,10 @@
       "id": "google-assist",
       "title": "Google Assist",
       "environments": [ "edit","dev", "preview", "live", "prod"],
-      "url": "http://www.google.com",
+      "url": "https://www.google.com/search?q=edge+delivery+services",
       "isPalette": false,
+      "passConfig":true,
+      "passReferrer": true,
       "includePaths": [
         "**.docx**"
       ],
