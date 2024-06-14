@@ -7,9 +7,12 @@
       "environments": [ "edit","dev", "preview", "live", "prod"],
       "url": "https://www.google.com/search?q=edge+delivery+services",
       "passConfig":true,
-      "passReferrer": true,
+      "excludePaths":[
+        "**/fr/**"
+      ],
       "includePaths": [
-        "**.docx**"
+        "**.docx**",
+        "**/fr/blocks/**"
       ],
       "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:400px; height: calc(100vh - 60px)"
     },
