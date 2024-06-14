@@ -4,7 +4,7 @@
     {
       "id": "google-assist",
       "title": "Google Assist",
-      "environments": [ "edit", "live", "prod"],
+      "environments": [ "edit","dev", "preview", "live", "prod"],
       "url": "http://www.google.com",
       "isPalette": false,
       "includePaths": [
@@ -20,7 +20,7 @@
     {
       "containerId": "tools",
       "id": "localize",
-      "title": "Localize",
+      "title": "Localize 1",
       "environments": [ "edit","dev", "preview", "live", "prod" ],
       "url": "/tools/loc/index.html",
       "passReferrer": true,
