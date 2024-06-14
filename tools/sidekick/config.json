@@ -4,7 +4,7 @@
     {
       "id": "google-assist",
       "title": "Google Assist",
-      "environments": [ "edit","dev", "preview", "live", "prod"],
+      "environments": [ "edit", "live", "prod"],
       "url": "http://www.google.com",
       "isPalette": false,
       "includePaths": [
