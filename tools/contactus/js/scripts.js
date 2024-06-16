@@ -19,7 +19,7 @@ document.addEventListener("readystatechange", () => {
             formdata.append("phone", "+1416416416");
             formdata.append("email", "aemgeeks1212@gmail.com");
             formdata.append("message", "This is custom action with custom console.");
-            
+            console.log("---Submitting form 2----");
             const requestOptions = {
               method: "POST",
               body: formdata,
