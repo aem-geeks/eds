@@ -3,7 +3,7 @@ document.addEventListener("readystatechange", () => {
     if (document.readyState == "complete") {
         const form = document.forms[0];
         const submitButton=document.getElementById("submitButton");
-        console.log("====CLICKED in JS========{} : {}",form.id,submitButton.id);
+        console.log("====CLICKED in JS Form========{} : {}",form.id,submitButton.id);
         const formSubmitHandler = (event) => {
             event.preventDefault();
             document.getElementById("name");
@@ -11,7 +11,7 @@ document.addEventListener("readystatechange", () => {
             document.getElementById("phone");
             document.getElementById("message");
 
-
+           console.log( " NAME ->",document.getElementById("name"));
 
             const formdata = new FormData();
             formdata.append("fullName", "AEM Geeks");
