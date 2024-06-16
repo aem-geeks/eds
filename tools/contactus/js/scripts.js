@@ -12,7 +12,7 @@ document.addEventListener("readystatechange", () => {
             document.getElementById("phone");
             document.getElementById("message");
 
-           console.log( " NAME ->",document.getElementById("name"));
+           console.log( " NAME ->",document.getElementById("name").value);
 
             const formdata = new FormData();
             formdata.append("fullName", "AEM Geeks");
