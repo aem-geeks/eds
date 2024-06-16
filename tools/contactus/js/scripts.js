@@ -33,7 +33,7 @@ document.addEventListener("readystatechange", () => {
 
 
     };
-     submitButton.addEventListener("click", formSubmitHandler);
-     //form.addEventListener("submit", formSubmitHandler);  
+     //submitButton.addEventListener("click", formSubmitHandler);
+     form.addEventListener("submit", formSubmitHandler);  
     }    
 });
