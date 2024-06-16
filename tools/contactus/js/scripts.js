@@ -6,6 +6,7 @@ document.addEventListener("readystatechange", () => {
         console.log("====CLICKED in JS Form========{} : {}",form.id,submitButton.id);
         const formSubmitHandler = (event) => {
             event.preventDefault();
+            console.log("---Submitting form ----");
             document.getElementById("name");
             document.getElementById("email");
             document.getElementById("phone");
