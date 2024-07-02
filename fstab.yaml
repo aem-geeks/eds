@@ -1,3 +1,4 @@
-mountpoints:
-  /eds : https://drive.google.com/drive/folders/1wOcpoK6uy09r82JtcZYKwfY6eE3X-TDd
-  /hcp : https://drive.google.com/drive/folders/1soI2MARKUMmiByLMijSz97Dw8UxkZ8FZ
+mountpoints:{
+  /: https://drive.google.com/drive/folders/1wOcpoK6uy09r82JtcZYKwfY6eE3X-TDd\n
+  /hcp: https://drive.google.com/drive/folders/1soI2MARKUMmiByLMijSz97Dw8UxkZ8FZ
+}
